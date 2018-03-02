@@ -12,4 +12,8 @@ class ThreadsController extends Controller
     $threads = Thread::all();
     return view('threads::index', compact($threads));
   }
+
+  public function show(Request $request, Thread $thread) {
+    return view('threads::show', ['thread' => $thread]);
+  }
 }

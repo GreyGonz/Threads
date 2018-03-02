@@ -29,13 +29,14 @@
             <th>{{ thread.body }}</th>
             <th>
               <div class="btn-group">
-                <button class="btn btn-primary">Show</button>
-                <button class="btn btn-danger">Delete</button>
+                <a :href="'threads/' + thread.id">
+                  <button class="btn btn-primary">Show</button>
+                </a>
+                <button class="btn btn-danger" @click="sendEmit('deleteThread', thread.id)">Delete</button>
               </div>
             </th>
           </tr>
         </tbody>
-
       </table>
 
       <div class="form-group has-feedback" :class="{ 'has-error': this.form.errors.has('title') }">
@@ -43,7 +44,7 @@
         <transition name="fade">
           <span v-text="form.errors.get('title')" v-if="form.errors.has('title')" class="help-block"></span>
         </transition>
-        <input @input="form.errors.clear('title')" type="text" name="title" class="form-control" id="title" v-model="form.title" @keydown.enter="create">
+        <input @input="form.errors.clear('title')" type="text" name="title" class="form-control" id="title" v-model="form.title" @keydown.enter="sendEmit('create', form)">
       </div>
 
       <div class="form-group has-feedback" :class="{ 'has-error': this.form.errors.has('description') }">
@@ -51,7 +52,7 @@
         <transition name="fade">
           <span v-text="form.errors.get('description')" v-if="form.errors.has('description')" class="help-block"></span>
         </transition>
-        <input @input="form.errors.clear('description')" type="text" name="description" class="form-control" id="description" v-model="form.description" @keydown.enter="create">
+        <input @input="form.errors.clear('description')" type="text" name="description" class="form-control" id="description" v-model="form.description" @keydown.enter="sendEmit('create', form)">
       </div>
 
       <div class="form-group has-feedback" :class="{ 'has-error': this.form.errors.has('body') }">
@@ -59,7 +60,7 @@
         <transition name="fade">
           <span v-text="form.errors.get('body')" v-if="form.errors.has('body')" class="help-block"></span>
         </transition>
-        <input @input="form.errors.clear('body')" type="text" name="body" class="form-control" id="body" v-model="form.body" @keydown.enter="create">
+        <input @input="form.errors.clear('body')" type="text" name="body" class="form-control" id="body" v-model="form.body" @keydown.enter="sendEmit('create', form)">
       </div>
 
       <div class="form-group has-feedback" :class="{ 'has-error': this.form.errors.has('user_id') }">
@@ -67,62 +68,26 @@
         <transition name="fade">
           <span v-text="form.errors.get('user_id')" v-if="form.errors.has('user_id')" class="help-block"></span>
         </transition>
-        <input @input="form.errors.clear('user_id')" type="text" name="user_id" class="form-control" id="user_id" v-model="form.user_id" @keydown.enter="create">
+        <input @input="form.errors.clear('user_id')" type="text" name="user_id" class="form-control" id="user_id" v-model="form.user_id" @keydown.enter="sendEmit('create', form)">
       </div>
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
-      <button type="submit" class="btn btn-primary" @click="create">Submit</button>
+      <button type="submit" class="btn btn-primary" @click="sendEmit('create', form)">Submit</button>
     </div>
   </div>
 </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
-  import Form from 'acacha-forms'
 
   export default {
-    name: 'Threads',
-    data () {
-      return {
-        form: new Form({ title: 'pova', description: 'prova', body: 'prova', user_id: '1' }),
-        formName: new Form({ name: '' })
-      }
-    },
-    computed: {
-      ...mapGetters(['count']),
-      threads: {
-        get () {
-          return this.$store.state.threads
-        },
-        set (value) {
-          this.$store.commit('threads', value)
-        }
-      }
-    },
+    name: 'ThreadsList',
+    props: ['threads', 'form'],
     methods: {
-      create: function (form) {
-        let url = '/api/threads'
-        // POST
-        form.post(url).then((response) => {
-          // Emmagatzema a fitxer JSON
-          this.threads.push({
-            name: form.name,
-            description: form.description,
-            user_id: form.user_id,
-            completed: form.completed
-          })
-          form.name = ''
-          form.description = ''
-        }).catch((error) => {
-          console.log(error.message);
-        });
-      }
-    },
-    mounted () {
-      this.$store.dispatch('fetchThreads')
-      console.log(this.$store.state.threads)
+      sendEmit: function (name, message) {
+        this.$emit(name, message)
+      },
     }
   }
 </script>

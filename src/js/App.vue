@@ -1,6 +1,6 @@
 <template>
   <div>
-    <threads-container></threads-container>
+    <threads-list-container></threads-list-container>
   </div>
 </template>
 

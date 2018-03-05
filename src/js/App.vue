@@ -6,11 +6,6 @@
 
 <script>
   export default {
-    name: 'App',
-    computed: {
-      count: function () {
-        return this.$store.state.count
-      }
-    }
+    name: 'app',
   }
 </script>

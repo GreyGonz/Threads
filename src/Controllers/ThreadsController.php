@@ -14,6 +14,6 @@ class ThreadsController extends Controller
   }
 
   public function show(Request $request, Thread $thread) {
-    return view('threads::show', ['thread' => $thread]);
+    return view('threads::show', ['thread_id' => $thread->id, 'user' => $thread->user]);
   }
 }

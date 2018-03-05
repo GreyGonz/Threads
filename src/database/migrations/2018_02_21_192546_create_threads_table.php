@@ -18,7 +18,7 @@ class CreateThreadsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->text('body');
-            $table->integer('user_id')->nullable()->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }

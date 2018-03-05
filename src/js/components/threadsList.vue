@@ -17,7 +17,6 @@
             <th>id</th>
             <th>title</th>
             <th>description</th>
-            <th>body</th>
             <th>actions</th>
           </tr>
         </thead>
@@ -26,12 +25,9 @@
             <th>{{ thread.id }}</th>
             <th>{{ thread.title }}</th>
             <th>{{ thread.description }}</th>
-            <th>{{ thread.body }}</th>
             <th>
               <div class="btn-group">
-                <a :href="'threads/' + thread.id">
-                  <button class="btn btn-primary">Show</button>
-                </a>
+                <button class="btn btn-primary" @click="window.location.href = '/threads/' + threads.id">Show</button>
                 <button class="btn btn-danger" @click="sendEmit('deleteThread', thread.id)">Delete</button>
               </div>
             </th>
@@ -61,14 +57,6 @@
           <span v-text="form.errors.get('body')" v-if="form.errors.has('body')" class="help-block"></span>
         </transition>
         <input @input="form.errors.clear('body')" type="text" name="body" class="form-control" id="body" v-model="form.body" @keydown.enter="sendEmit('create', form)">
-      </div>
-
-      <div class="form-group has-feedback" :class="{ 'has-error': this.form.errors.has('user_id') }">
-        <label for="user_id">Thread user_id:</label>
-        <transition name="fade">
-          <span v-text="form.errors.get('user_id')" v-if="form.errors.has('user_id')" class="help-block"></span>
-        </transition>
-        <input @input="form.errors.clear('user_id')" type="text" name="user_id" class="form-control" id="user_id" v-model="form.user_id" @keydown.enter="sendEmit('create', form)">
       </div>
     </div>
     <!-- /.box-body -->

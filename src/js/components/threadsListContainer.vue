@@ -3,8 +3,7 @@
    :threads="threads"
    :form="form"
    @create="create"
-   @deleteThread="deleteThread"
-   @showThread="showThread">
+   @deleteThread="deleteThread">
  </threads-list>
 </template>
 
@@ -17,13 +16,15 @@
    data () {
      return {
        threads: [],
-       form: new Form({ title: '', description: '', body: '', user_id: '' })
+       form: new Form({ title: '', description: '', body: '', user_id: '' }),
+       user: null
      }
    },
    methods: {
      create: function (form) {
        let url = '/api/threads'
        // POST
+       this.form.user_id = this.user.id
        this.form = form
        this.form.post(url).then((response) => {
          // Emmagatzema a fitxer JSO
@@ -36,18 +37,26 @@
          this.form.title = ''
          this.form.description = ''
          this.form.body = ''
-         this.form.user_id = ''
-         this.fetchThreads()
        }).catch((error) => {
          console.log(error.message);
+       }).then(() => {
+         this.fetchThreads()
        });
+     },
+     getUser: function () {
+       axios.get('api/user').then((response) => {
+         this.user = response.data
+       }).catch((error) => {
+         console.log(error.message)
+       })
      },
      deleteThread: function (id) {
        axios.delete('api/threads/' + id).then((response) => {
          console.log('thread deleted')
-         this.fetchThreads()
        }).catch((error) => {
          console.log(error.message)
+       }).then(() => {
+         this.fetchThreads()
        })
      },
      fetchThreads: function () {
@@ -60,6 +69,7 @@
    },
    mounted () {
      this.fetchThreads()
+     this.getUser()
    }
  }
 </script>

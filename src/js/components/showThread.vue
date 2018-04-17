@@ -11,10 +11,15 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body">
-        <medium-editor :text='thread.body' :options='options' custom-tag='p' v-on:edit="applyText"></medium-editor>
+        <medium-editor
+          :text="thread.body"
+          :options='options'
+          custom-tag='p'>
+          <!--v-on:edit="applyText">-->
+        </medium-editor>
       </div>
       <div class="box-footer">
-        <button type="button" class="btn btn-primary" @click="sendEmit('updateThread', thread)">Save</button>
+        <button type="button" class="btn btn-primary" @click="updateThread">Save</button>
       </div>
       <!-- /.box-body -->
     </div>
@@ -38,12 +43,17 @@
       'medium-editor': editor
     },
     methods: {
+      updateThread () {
+        this.thread.body = document.getElementsByClassName('medium-editor-element')[0].innerText
+        this.sendEmit('updateThread', this.thread)
+      },
       sendEmit: function (option, message) {
         this.$emit(option, message)
       },
-      applyText: function (text) {
-        this.thread.body = text.event.srcElement.innerHTML
-      }
+      // applyText: function () {
+      //   // console.log(document.getElementsByClassName('medium-editor-element')[0].innerText)
+      //   this.sendEmit('edited', document.getElementsByClassName('medium-editor-element')[0].innerText)
+      // }
     }
   }
 </script>

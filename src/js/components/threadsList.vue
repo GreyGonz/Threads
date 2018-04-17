@@ -26,12 +26,10 @@
             <th>{{ thread.title }}</th>
             <th>{{ thread.description }}</th>
             <th>
-              <div class="btn-group">
-                <a :href="'/threads/' + thread.id">
-                  <button class="btn btn-primary">Show</button>
-                </a>
-                <button class="btn btn-danger" @click="sendEmit('deleteThread', thread.id)">Delete</button>
-              </div>
+              <a :href="'/threads/' + thread.id">
+                <button class="btn btn-primary">Show</button>
+              </a>
+              <button class="btn btn-danger" @click="sendEmit('deleteThread', thread.id)">Delete</button>
             </th>
           </tr>
         </tbody>

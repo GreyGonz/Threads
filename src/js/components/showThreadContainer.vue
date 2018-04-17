@@ -2,7 +2,9 @@
   <show-thread
     :thread="thread"
     :user="user"
-    @updateThread="updateThread"></show-thread>
+    @updateThread="updateThread"
+    @edited="edit">
+  </show-thread>
 </template>
 
 <script>
@@ -17,6 +19,9 @@
    },
    props: ['thread_id', 'user'],
    methods: {
+     edit (text) {
+       this.thread.body = text
+     },
      fetchThread: function () {
        axios.get('/api/threads/' + this.thread_id).then((response) => {
          this.thread = response.data

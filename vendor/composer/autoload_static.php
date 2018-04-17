@@ -19,6 +19,10 @@ class ComposerStaticInit5969e833eb9f6c2d8dc821508732d429
         array (
             'Symfony\\Component\\Yaml\\' => 23,
         ),
+        'G' => 
+        array (
+            'Greygonz\\Threads\\' => 17,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
@@ -39,6 +43,10 @@ class ComposerStaticInit5969e833eb9f6c2d8dc821508732d429
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
+        'Greygonz\\Threads\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

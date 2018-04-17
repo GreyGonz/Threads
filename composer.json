@@ -9,5 +9,17 @@
     "require": {},
     "require-dev": {
         "phpunit/phpunit": "4.8.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Greygonz\\Threads\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Greygonz\\Threads\\Providers\\ThreadsServiceProvider"
+            ]
+        }
     }
 }
